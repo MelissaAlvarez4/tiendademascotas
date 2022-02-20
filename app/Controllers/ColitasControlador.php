@@ -11,13 +11,41 @@ class ColitasControlador extends Controller{
         return view('portada');
     }
 
+    //////// CONSULTA CON API REST ////////
     public function listarPorNombre($nombre)
     {   
-        $data['nombre'] = $nombre == "null" ? null : $nombre;
+        $error = false;
+
+         //Si no se envia nombre de animal se listan todos
+        if($nombre != "null"){
+
+            //Consumo de la API REST
+            $datos = @file_get_contents('http://localhost/DWES/adopcion-animales/public/buscar/todos/'.$nombre);
+
+            if($datos != false){ 
+                // parseado de datos
+                $dataNombre = json_decode($datos, true);
+                $data['mascotas'] = $dataNombre;
+                $data['nombre'] = true;
+            }else{
+                $error = true;
+            }
+
+        }else{
+            $dataAll = json_decode( file_get_contents('http://localhost/DWES/adopcion-animales/public/buscar/todos'), true );
+            $data['mascotas'] = $dataAll;
+            $data['nombre'] = false;
+        }
+
+        $data['error'] = $error;
+
         return view('listadoNombre', $data);
     }
 
+
+    /////// CONSULTA CON PDO MEDIANTE CODEIGNITER //////
     public function listarPorProtectora($protectora = null){
+
         $animalesModelo = new ColitasModelo();
 
         //Animales por protectora
@@ -32,6 +60,22 @@ class ColitasControlador extends Controller{
             $data['protectora'] = false;
         }
         return view('listadoProtectora', $data);
+    }
+
+
+    ///////// CONSULTA SOAP //////////
+    public function listarEspecie($especie = null)
+    {
+
+        $animalesModelo = new ColitasModelo();
+
+        //Animales por especie
+        if($especie != null){
+            $datos['animalesEspecie'] = $animalesModelo->getEspecie($especie);
+        }else{
+            $datos['animalesEspecie'] = $animalesModelo->getAll();
+        }   
+
     }
 
     public function buscarNombre()

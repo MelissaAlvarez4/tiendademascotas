@@ -21,26 +21,11 @@ class ColitasRestController extends ResourceController{
     }
 
     public function show($nombre = null)
-    { 
+    {    
+        //Animales por nombre
         $datos = $this->model->asArray()->where('nombre', $nombre)->first();
         $datos['imagen'] = base64_encode($datos['imagen']);
-        
+
         return $this->respond($datos);
     }
-
-
-    // public function buscarEspecie($especie = null)
-    // {
-
-    //     $animalesModelo = new ColitasModelo();
-
-    //     //Animales por protectora
-    //     if($protectora != null){
-    //         $datos['animalesEspecie'] = $animalesModelo->getEspecie($especie);
-    //     }else{
-    //         $datos['animalesEspecie'] = $animalesModelo->getAll();
-    //     }   
-
-    // }
-
 }

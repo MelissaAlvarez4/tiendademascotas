@@ -42,7 +42,7 @@ class ColitasModelo extends Model{
                 $datos['imagen'] = base64_encode($datos['imagen']);
             }
 
-        }catch(ErrorException){
+        }catch(ErrorException $e){
             $datos = null;
         }
         
