@@ -63,18 +63,24 @@ class ColitasControlador extends Controller{
     }
 
 
-    ///////// CONSULTA SOAP //////////
+    ///////// CONSULTA CON PDO MEDIANTE CODEIGNITER//////////
     public function listarEspecie($especie = null)
     {
 
         $animalesModelo = new ColitasModelo();
 
-        //Animales por especie
-        if($especie != null){
-            $datos['animalesEspecie'] = $animalesModelo->getEspecie($especie);
+        //Animales por protectora
+        if($especie != "null"){
+
+            $datosModel = $animalesModelo->getEspecie($especie);
+            $data['mascotas'] = $datosModel;
+            $data['especie'] = true;
+
         }else{
-            $datos['animalesEspecie'] = $animalesModelo->getAll();
-        }   
+            $data['mascotas'] = $animalesModelo->getAll();
+            $data['especie'] = false;
+        }
+        return view('listadoEspecie', $data);
 
     }
 

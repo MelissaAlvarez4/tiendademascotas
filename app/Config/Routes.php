@@ -39,6 +39,7 @@ $routes->get('/buscar/protectora', 'ColitasControlador::buscarProtectora');
 $routes->get('/buscar/especie', 'ColitasControlador::buscarEspecie');
 $routes->get('/listadoNombre/(:any)', 'ColitasControlador::listarPorNombre/$1');
 $routes->get('/listadoProtectora/(:any)', 'ColitasControlador::listarPorProtectora/$1');
+$routes->get('/listadoEspecie/(:any)', 'ColitasControlador::listarEspecie/$1');
 
 /*
  * --------------------------------------------------------------------

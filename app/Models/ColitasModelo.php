@@ -50,10 +50,29 @@ class ColitasModelo extends Model{
     }
 
 
-    // public function getEspecie($especie = null)
-    // {
-    //     //Animales por especie
-    //     return $this->asArray()
-    //     ->where('especie', $especie)->first();
-    // }
+    public function getEspecie($especie)
+    {
+        try{
+            //Animales por protectora
+            $datos = $this->asArray()
+            ->where('especie', $especie)->findAll();
+
+            //si hay más de una mascota por protectora devuelve la lista
+            if(sizeof($datos) > 1){
+                foreach($datos as $key=>$value){
+                    $newArrData[$key] =  $datos[$key];
+                    $newArrData[$key]['imagen'] = base64_encode($datos[$key]['imagen']);
+                }
+
+                return $newArrData;
+            }else if(sizeof($datos) == 1){
+                $datos['imagen'] = base64_encode($datos['imagen']);
+            }
+
+        }catch(ErrorException $e){
+            $datos = null;
+        }
+        
+        return $datos;
+    }
 }

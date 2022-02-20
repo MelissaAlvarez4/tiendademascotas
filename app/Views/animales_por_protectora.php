@@ -1,5 +1,6 @@
 <!-- Inyecto la barra de navegacion -->
 <?php include 'header.php'?>
+
 <body>
 <a  href="../" class="mx-2">Inicio</a>
 <form class="container">
