@@ -15,10 +15,8 @@ class ColitasModelo extends Model{
         $datos = $this->asArray()
         ->findAll();
 
-        foreach($datos as $key=>$value){
-            $newArrData[$key] =  $datos[$key];
-            $newArrData[$key]['imagen'] = base64_encode($datos[$key]['imagen']);
-        }
+        $newArrData = $this->encode($datos);
+
         return $newArrData;
     }
 
@@ -32,12 +30,10 @@ class ColitasModelo extends Model{
 
             //si hay más de una mascota por protectora devuelve la lista
             if(sizeof($datos) > 1){
-                foreach($datos as $key=>$value){
-                    $newArrData[$key] =  $datos[$key];
-                    $newArrData[$key]['imagen'] = base64_encode($datos[$key]['imagen']);
-                }
+                $newArrData = $this->encode($datos);
 
                 return $newArrData;
+
             }else if(sizeof($datos) == 1){
                 $datos['imagen'] = base64_encode($datos['imagen']);
             }
@@ -53,18 +49,16 @@ class ColitasModelo extends Model{
     public function getEspecie($especie)
     {
         try{
-            //Animales por protectora
+            //Animales por especie
             $datos = $this->asArray()
             ->where('especie', $especie)->findAll();
 
-            //si hay más de una mascota por protectora devuelve la lista
+            //si hay más de una mascota por especie devuelve la lista
             if(sizeof($datos) > 1){
-                foreach($datos as $key=>$value){
-                    $newArrData[$key] =  $datos[$key];
-                    $newArrData[$key]['imagen'] = base64_encode($datos[$key]['imagen']);
-                }
-
+                $newArrData = $this->encode($datos);
+                
                 return $newArrData;
+
             }else if(sizeof($datos) == 1){
                 $datos['imagen'] = base64_encode($datos['imagen']);
             }
@@ -74,5 +68,14 @@ class ColitasModelo extends Model{
         }
         
         return $datos;
+    }
+
+    public function encode($datos){
+        foreach($datos as $key=>$value){
+            $newArrData[$key] =  $datos[$key];
+            $newArrData[$key]['imagen'] = base64_encode($datos[$key]['imagen']);
+        }
+
+        return $newArrData;
     }
 }

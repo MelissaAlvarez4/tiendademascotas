@@ -69,7 +69,7 @@ class ColitasControlador extends Controller{
 
         $animalesModelo = new ColitasModelo();
 
-        //Animales por protectora
+        //Animales por especie
         if($especie != "null"){
 
             $datosModel = $animalesModelo->getEspecie($especie);

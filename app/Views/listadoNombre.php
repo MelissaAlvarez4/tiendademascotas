@@ -5,8 +5,8 @@
 
 <?php
  
-    if($error == false){
-        if($nombre == true){
+    if(!$error){
+        if($nombre){
             listarPorDato($mascotas, "nombre");
         }else{
             listarTodos($mascotas, "nombre");
